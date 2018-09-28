@@ -5,6 +5,7 @@ function initiateGame() {
   gameCanvas.start()
   jet = new Component(10, 20, 'white', 300, 560)
   wall = new Component(10, 10, 'red', 300, 20)
+  wall.speedY = 1
   document.addEventListener('keydown', e => {
     if (e.keyCode == '37') {
       jet.moveLeft()
@@ -49,6 +50,7 @@ class Component {
 
 const updateGameArea = () => {
   gameCanvas.clear()
+  wall.newPos()
   wall.update()
   jet.newPos()
   jet.update()
