@@ -37,13 +37,17 @@ class Component {
     this.y += this.speedY
   }
   moveLeft() {
-    if (this.speedX > -4) {
-      this.speedX -= 1
+    if (this.speedX > 0) {
+      this.speedX = -1
+    } else if (this.speedX > -4) {
+      this.speedX = -3
     }
   }
   moveRight() {
-    if (this.speedX < 4) {
-      this.speedX += 1
+    if (this.speedX < 0) {
+      this.speedX = 1
+    } else if (this.speedX < 4) {
+      this.speedX = 3
     }
   }
 }
