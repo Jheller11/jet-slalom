@@ -9,10 +9,8 @@ function initiateGame() {
   document.addEventListener('keydown', e => {
     if (e.keyCode == '37') {
       jet.moveLeft()
-      console.log(jet.speedX)
     } else if (e.keyCode == '39') {
       jet.moveRight()
-      console.log(jet.speedX)
     }
   })
 }
@@ -50,6 +48,28 @@ class Component {
       this.speedX = 3
     }
   }
+  checkCrash(obstacle) {
+    let leftSide = this.x
+    let rightSide = this.x + this.width
+    let front = this.y
+    let back = this.y + this.height
+    let obstacleLeft = obstacle.x
+    let obstacleRight = obstacle.x + obstacle.width
+    let obstacleTop = obstacle.y
+    let obstacleBottom = obstacle.y + obstacle.height
+    let crash = true
+    if (
+      back < obstacleTop ||
+      front > obstacleBottom ||
+      rightSide < obstacleLeft ||
+      leftSide > obstacleRight
+    ) {
+      crash = false
+    }
+    console.log(crash)
+
+    return crash
+  }
 }
 
 const updateGameArea = () => {
@@ -58,6 +78,9 @@ const updateGameArea = () => {
   wall.update()
   jet.newPos()
   jet.update()
+  if (jet.checkCrash(wall)) {
+    gameCanvas.stop()
+  }
 }
 
 var gameCanvas = {
@@ -78,6 +101,5 @@ var gameCanvas = {
 }
 
 initiateGame()
-updateGameArea()
 
 // add event listeners for left and right accelerate with left/right arrows

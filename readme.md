@@ -1,6 +1,6 @@
 ## Description
 
-This game is a 2-D vertical scrolling game where the object is to fly as far you can without crashing into any obstacles.
+This game is a 2-D vertical scrolling game where the object is to fly as far you can without crashing into any obstacles. The game is currently in development and not playable. Once completed, a link to the deployed game will be provided.
 
 ## Status
 
