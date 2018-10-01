@@ -128,10 +128,7 @@ var gameCanvas = {
     this.canvas.width = 600
     this.canvas.height = 600
     this.context = this.canvas.getContext('2d')
-    document.body.insertBefore(
-      this.canvas,
-      document.querySelector('.game').childNodes[0]
-    )
+    document.querySelector('.game').appendChild(this.canvas)
     this.interval = setInterval(updateGameArea, 20)
     this.frameNo = 0
     this.score = 0
