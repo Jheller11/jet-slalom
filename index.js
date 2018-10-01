@@ -96,10 +96,20 @@ const updateGameArea = () => {
 }
 
 const generateWall = lastX => {
+  let random = Math.random()
+  let adjustment = () => {
+    if (random > 0.667) {
+      return 5
+    } else if (random > 0.334) {
+      return 0
+    } else {
+      return -5
+    }
+  }
   let obj = {}
   let colors = ['green', 'blue', 'red', 'pink', 'yellow', 'orange', 'purple']
   obj.color = colors[Math.floor(Math.random() * colors.length)]
-  obj.x = lastX + 5
+  obj.x = lastX + adjustment()
   return obj
 }
 
