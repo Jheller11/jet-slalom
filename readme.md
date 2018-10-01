@@ -8,8 +8,8 @@ This game is a 2-D vertical scrolling game where the object is to fly as far you
 - [x] Render Components
 - [x] Component Motion
 - [x] User Controls
-- [ ] Check for Collisions
-- [ ] Add more obstacles
+- [x] Check for Collisions
+- [x] Add more obstacles
 - [ ] Pairs of obstacles
 - [ ] Gap in Pairs
 - [ ] Scorekeeping

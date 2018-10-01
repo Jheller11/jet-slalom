@@ -1,11 +1,11 @@
 var jet
-var wall
+var wall = []
 
 function initiateGame() {
   gameCanvas.start()
   jet = new Component(10, 20, 'white', 300, 560)
-  wall = new Component(10, 10, 'red', 300, 20)
-  wall.speedY = 1
+  wall.push(new Component(10, 10, 'red', 300, 0))
+  wall[0].speedY = 1
   document.addEventListener('keydown', e => {
     if (e.keyCode == '37') {
       jet.moveLeft()
@@ -66,21 +66,39 @@ class Component {
     ) {
       crash = false
     }
-    console.log(crash)
-
     return crash
   }
 }
 
 const updateGameArea = () => {
   gameCanvas.clear()
-  wall.newPos()
-  wall.update()
+  gameCanvas.frameNo += 1
+  wall.forEach(component => {
+    if (jet.checkCrash(component)) {
+      gameCanvas.stop()
+    }
+  })
   jet.newPos()
   jet.update()
-  if (jet.checkCrash(wall)) {
-    gameCanvas.stop()
+  if ((gameCanvas.frameNo / 10) % 1 === 0) {
+    let lastX = wall[wall.length - 1].x - 200
+    let newObj = generateWall(lastX)
+    wall.push(new Component(10, 10, newObj.color, newObj.x, 0))
+    wall.push(new Component(10, 10, newObj.color, newObj.x + 200, 0))
   }
+  wall.forEach(component => {
+    component.speedY = 1
+    component.newPos()
+    component.update()
+  })
+}
+
+const generateWall = lastX => {
+  let obj = {}
+  let colors = ['green', 'blue', 'red', 'pink', 'yellow', 'orange', 'purple']
+  obj.color = colors[Math.floor(Math.random() * colors.length)]
+  obj.x = lastX + 5
+  return obj
 }
 
 var gameCanvas = {
@@ -91,6 +109,7 @@ var gameCanvas = {
     this.context = this.canvas.getContext('2d')
     document.body.insertBefore(this.canvas, document.body.childNodes[0])
     this.interval = setInterval(updateGameArea, 20)
+    this.frameNo = 0
   },
   clear: function() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
@@ -101,5 +120,3 @@ var gameCanvas = {
 }
 
 initiateGame()
-
-// add event listeners for left and right accelerate with left/right arrows
