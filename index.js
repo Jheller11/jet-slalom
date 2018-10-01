@@ -4,7 +4,7 @@ var wall = []
 function initiateGame() {
   gameCanvas.start()
   jet = new Component(10, 20, 'white', 300, 560)
-  wall.push(new Component(10, 10, 'red', 300, 0))
+  wall.push(new Component(10, 10, 'red', 400, 560))
   wall[0].speedY = 1
   document.addEventListener('keydown', e => {
     if (e.keyCode == '37') {
@@ -72,7 +72,7 @@ class Component {
 
 const updateGameArea = () => {
   gameCanvas.clear()
-  gameCanvas.frameNo += 1
+  gameCanvas.frameNo += gameCanvas.phase
   gameCanvas.score += 1
   wall.forEach(component => {
     if (jet.checkCrash(component)) {
@@ -81,14 +81,19 @@ const updateGameArea = () => {
   })
   jet.newPos()
   jet.update()
+  if ((gameCanvas.frameNo / 1000) % 1 === 0) {
+    gameCanvas.phase += 1
+  }
   if ((gameCanvas.frameNo / 10) % 1 === 0) {
-    let lastX = wall[wall.length - 1].x - 200
+    let gap = 25 * (10 - gameCanvas.phase)
+    console.log(gap)
+    let lastX = wall[wall.length - 1].x - gap
     let newObj = generateWall(lastX)
     wall.push(new Component(10, 10, newObj.color, newObj.x, 0))
-    wall.push(new Component(10, 10, newObj.color, newObj.x + 200, 0))
+    wall.push(new Component(10, 10, newObj.color, newObj.x + gap, 0))
   }
   wall.forEach(component => {
-    component.speedY = 1
+    component.speedY = gameCanvas.phase
     component.newPos()
     component.update()
   })
@@ -131,6 +136,7 @@ var gameCanvas = {
     this.interval = setInterval(updateGameArea, 20)
     this.frameNo = 0
     this.score = 0
+    this.phase = 1
   },
   clear: function() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
