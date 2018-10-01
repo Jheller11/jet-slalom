@@ -10,7 +10,7 @@ This game is a 2-D vertical scrolling game where the object is to fly as far you
 - [x] User Controls
 - [x] Check for Collisions
 - [x] Add more obstacles
-- [ ] Pairs of obstacles
+- [x] Pairs of obstacles
 - [ ] Gap in Pairs
 - [ ] Scorekeeping
 - [ ] Rest of HTML Page(list scores, instructions etc.)
