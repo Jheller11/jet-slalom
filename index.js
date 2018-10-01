@@ -4,7 +4,7 @@ var wall = []
 function initiateGame() {
   gameCanvas.start()
   jet = new Component(10, 20, 'white', 300, 560)
-  wall.push(new Component(10, 10, 'red', 400, 560))
+  wall.push(new Component(10, 10, 'red', 400, 0))
   wall[0].speedY = 1
   document.addEventListener('keydown', e => {
     if (e.keyCode == '37') {
@@ -81,12 +81,11 @@ const updateGameArea = () => {
   })
   jet.newPos()
   jet.update()
-  if ((gameCanvas.frameNo / 1000) % 1 === 0) {
+  if ((gameCanvas.frameNo / 1000) % 1 === 0 && gameCanvas.phase < 6) {
     gameCanvas.phase += 1
   }
-  if ((gameCanvas.frameNo / 10) % 1 === 0) {
+  if (wall[wall.length - 1].y >= 10) {
     let gap = 25 * (10 - gameCanvas.phase)
-    console.log(gap)
     let lastX = wall[wall.length - 1].x - gap
     let newObj = generateWall(lastX)
     wall.push(new Component(10, 10, newObj.color, newObj.x, 0))
