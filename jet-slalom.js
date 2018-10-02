@@ -142,4 +142,4 @@ var gameCanvas = {
   }
 }
 
-initiateGame()
+document.querySelector('.start').addEventListener('click', () => initiateGame())
