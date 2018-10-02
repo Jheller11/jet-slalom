@@ -26,7 +26,7 @@ class Component {
 var gameCanvas = {
   canvas: document.createElement('canvas'),
   start: function() {
-    this.canvas.width = 700
+    this.canvas.width = 900
     this.canvas.height = 500
     this.context = this.canvas.getContext('2d')
     document.querySelector('.game').appendChild(this.canvas)
@@ -45,7 +45,15 @@ var gameCanvas = {
 const initiateGame = () => {
   gameCanvas.start()
   playerPaddle = new Component(20, 100, 'blue', 50, 200)
-  pcPaddle = new Component(20, 100, 'red', 630, 200)
+  pcPaddle = new Component(20, 100, 'red', 830, 200)
+}
+
+const updateGameArea = () => {
+  gameCanvas.clear()
+  playerPaddle.newPos()
+  pcPaddle.newPos()
+  playerPaddle.update()
+  pcPaddle.update()
 }
 
 initiateGame()
