@@ -22,13 +22,31 @@ class Component {
   }
 
   newPos() {
-    if (this.y + this.speedY > 400) {
-      this.y = 400
-    } else if (this.y + this.speedY < 0) {
-      this.y = 0
-    } else {
-      this.x += this.speedX
-      this.y += this.speedY
+    switch (this.type) {
+      case 'paddle':
+        if (this.y + this.speedY > 390) {
+          this.y = 390
+        } else if (this.y + this.speedY < 10) {
+          this.y = 10
+        } else {
+          this.x += this.speedX
+          this.y += this.speedY
+        }
+        break
+      case 'ball':
+        if (this.y + this.speedY > 485) {
+          this.y = 485
+          this.speedY = -this.speedY
+        } else if (this.y + this.speedY < 10) {
+          this.y = 10
+          this.speedY = -this.speedY
+        } else {
+          this.x += this.speedX
+          this.y += this.speedY
+        }
+        break
+      default:
+        break
     }
   }
 
@@ -71,8 +89,8 @@ const initiateGame = () => {
   walls.push(new Component(900, 10, 'gray', 0, 0, 'wall'))
   walls.push(new Component(900, 10, 'gray', 0, 490, 'wall'))
   ball = new Component(10, 10, 'green', 445, 245, 'ball')
-  ball.speedX = 3
-  ball.speedY = 5
+  ball.speedX = 0
+  ball.speedY = 4
   document.addEventListener('keydown', e => {
     if (e.keyCode == '40') {
       playerPaddle.moveUp()
