@@ -3,6 +3,8 @@ let playerPaddle,
   ball,
   walls = []
 
+// class component defines all elements (walls, paddles, ball)
+
 class Component {
   constructor(width, height, color, x, y, type) {
     this.width = width
@@ -84,6 +86,7 @@ class Component {
   }
 }
 
+// define game canvas shape and context
 var gameCanvas = {
   canvas: document.createElement('canvas'),
   start: function() {
@@ -94,6 +97,7 @@ var gameCanvas = {
     this.interval = setInterval(updateGameArea, 25)
     this.frameNo = 0
     this.score = [0, 0]
+    this.round = 0
   },
   clear: function() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
@@ -103,6 +107,18 @@ var gameCanvas = {
   }
 }
 
+// simple AI
+const simpleAI = (ball, pcPaddle) => {
+  let ballPosition = ball.y + ball.height / 2
+  let paddlePosition = pcPaddle.y + pcPaddle.height / 2
+  if (ballPosition < paddlePosition) {
+    pcPaddle.moveDown()
+  } else if (ballPosition > paddlePosition) {
+    pcPaddle.moveUp()
+  }
+}
+
+// start round with components
 const initiateGame = () => {
   gameCanvas.start()
   playerPaddle = new Component(20, 100, 'blue', 50, 200, 'paddle')
@@ -138,6 +154,7 @@ const updateGameArea = () => {
   walls.forEach(wall => {
     wall.update()
   })
+  simpleAI(ball, pcPaddle)
 }
 
 initiateGame()
