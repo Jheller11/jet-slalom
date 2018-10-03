@@ -50,6 +50,27 @@ class Component {
     }
   }
 
+  checkCollision(obstacle) {
+    let leftSide = this.x
+    let rightSide = this.x + this.width
+    let top = this.y
+    let bottom = this.y + this.height
+    let obstacleLeft = obstacle.x
+    let obstacleRight = obstacle.x + obstacle.width
+    let obstacleTop = obstacle.y
+    let obstacleBottom = obstacle.y + obstacle.height
+    let crash = true
+    if (
+      bottom < obstacleTop ||
+      top > obstacleBottom ||
+      rightSide < obstacleLeft ||
+      leftSide > obstacleRight
+    ) {
+      crash = false
+    }
+    return crash
+  }
+
   moveUp() {
     if (this.speedY < 5) {
       this.speedY += 5
@@ -89,7 +110,7 @@ const initiateGame = () => {
   walls.push(new Component(900, 10, 'gray', 0, 0, 'wall'))
   walls.push(new Component(900, 10, 'gray', 0, 490, 'wall'))
   ball = new Component(10, 10, 'green', 445, 245, 'ball')
-  ball.speedX = 0
+  ball.speedX = -3
   ball.speedY = 4
   document.addEventListener('keydown', e => {
     if (e.keyCode == '40') {
@@ -106,6 +127,12 @@ const updateGameArea = () => {
   pcPaddle.newPos()
   playerPaddle.update()
   pcPaddle.update()
+  if (pcPaddle.checkCollision(ball)) {
+    ball.speedX = -3
+  }
+  if (playerPaddle.checkCollision(ball)) {
+    ball.speedX = 3
+  }
   ball.newPos()
   ball.update()
   walls.forEach(wall => {
