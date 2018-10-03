@@ -26,14 +26,14 @@ Keep the ball out of your goal and hit it past the AI player to score a point.
 
 ### Pong Status
 
-- [ ] Render Canvas
-- [ ] Render components
-- [ ] motion
-- [ ] controls
-- [ ] collisions
-- [ ] bounces
+- [x] Render Canvas
+- [x] Render components
+- [x] motion
+- [x] controls
+- [x] collisions
+- [x] bounces
 - [ ] scoring
-- [ ] "AI"
+- [x] "AI"
 - [ ] Deploy
 
 ### Snake

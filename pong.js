@@ -127,7 +127,7 @@ const initiateGame = () => {
   walls.push(new Component(900, 10, 'gray', 0, 490, 'wall'))
   ball = new Component(10, 10, 'green', 445, 245, 'ball')
   ball.speedX = -3
-  ball.speedY = 4
+  ball.speedY = 6
   document.addEventListener('keydown', e => {
     if (e.keyCode == '40') {
       playerPaddle.moveUp()
@@ -155,6 +155,7 @@ const updateGameArea = () => {
     wall.update()
   })
   simpleAI(ball, pcPaddle)
+  simpleAI(ball, playerPaddle)
 }
 
 initiateGame()
