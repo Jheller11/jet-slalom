@@ -26,8 +26,8 @@ class Component {
   newPos() {
     switch (this.type) {
       case 'paddle':
-        if (this.y + this.speedY > 390) {
-          this.y = 390
+        if (this.y + this.speedY > 490) {
+          this.y = 490
         } else if (this.y + this.speedY < 10) {
           this.y = 10
         } else {
@@ -36,8 +36,8 @@ class Component {
         }
         break
       case 'ball':
-        if (this.y + this.speedY > 485) {
-          this.y = 485
+        if (this.y + this.speedY > 585) {
+          this.y = 585
           this.speedY = -this.speedY
         } else if (this.y + this.speedY < 10) {
           this.y = 10
@@ -91,7 +91,7 @@ var gameCanvas = {
   canvas: document.createElement('canvas'),
   start: function() {
     this.canvas.width = 900
-    this.canvas.height = 500
+    this.canvas.height = 600
     this.context = this.canvas.getContext('2d')
     document.querySelector('.game').appendChild(this.canvas)
     this.interval = setInterval(updateGameArea, 25)
@@ -124,10 +124,10 @@ const initiateGame = () => {
   playerPaddle = new Component(20, 100, 'blue', 50, 200, 'paddle')
   pcPaddle = new Component(20, 100, 'red', 830, 200, 'paddle')
   walls.push(new Component(900, 10, 'gray', 0, 0, 'wall'))
-  walls.push(new Component(900, 10, 'gray', 0, 490, 'wall'))
+  walls.push(new Component(900, 10, 'gray', 0, 590, 'wall'))
   ball = new Component(10, 10, 'green', 445, 245, 'ball')
-  ball.speedX = -3
-  ball.speedY = 6
+  ball.speedX = 6
+  ball.speedY = 5
   document.addEventListener('keydown', e => {
     if (e.keyCode == '40') {
       playerPaddle.moveUp()
@@ -137,7 +137,12 @@ const initiateGame = () => {
   })
 }
 
+const random = (min, max) => {
+  return Math.floor(Math.random() * max) + min
+}
+
 const updateGameArea = () => {
+  gameCanvas.frameNo += 1
   gameCanvas.clear()
   playerPaddle.newPos()
   pcPaddle.newPos()
@@ -154,8 +159,12 @@ const updateGameArea = () => {
   walls.forEach(wall => {
     wall.update()
   })
-  simpleAI(ball, pcPaddle)
-  simpleAI(ball, playerPaddle)
+  if ((gameCanvas.frameNo / 3) % 1 === 0) {
+    simpleAI(ball, pcPaddle)
+  }
+  if ((gameCanvas.frameNo / 3) % 1 === 0) {
+    simpleAI(ball, playerPaddle)
+  }
 }
 
 initiateGame()
